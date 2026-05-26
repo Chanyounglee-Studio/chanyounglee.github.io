@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chanyoung Lee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #fff; color: #111; font-family: 'Montserrat', sans-serif; }
+
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 0.5px solid #e0e0e0;
+      position: sticky; top: 0; background: #fff; z-index: 100;
+    }
+    .nav-left { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+    .nav-right { display: flex; gap: 28px; align-items: center; }
+    .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: #111; }
+    .nav-link {
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; color: #111; text-decoration: none;
+      padding-bottom: 1px; border-bottom: 0.5px solid transparent; transition: border-color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { border-bottom-color: #111; }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px; padding: 3px;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .grid-item {
+      position: relative; overflow: hidden; cursor: pointer;
+      aspect-ratio: 3/4; background: #e8e8e8;
+    }
+    .grid-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .grid-item:hover .grid-img { transform: scale(1.04); }
+
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: background 0.35s ease;
+    }
+    .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.42); }
+
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease 0.05s, transform 0.35s ease 0.05s;
+      padding: 0 16px;
+    }
+    .overlay-client {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-top: 7px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease 0.1s, transform 0.35s ease 0.1s;
+    }
+    .grid-item:hover .overlay-title,
+    .grid-item:hover .overlay-client {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* Info page */
+    .info-wrap { max-width: 520px; margin: 0 auto; padding: 64px 24px 80px; }
+    .info-intro { font-size: 14px; line-height: 1.9; color: #111; margin-bottom: 52px; }
+    .info-section { margin-bottom: 36px; }
+    .info-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; margin-bottom: 12px; }
+    .info-body { font-size: 13px; line-height: 1.85; color: #333; }
+    .info-link { color: #111; text-decoration: none; border-bottom: 0.5px solid #ccc; transition: border-color 0.2s; }
+    .info-link:hover { border-bottom-color: #111; }
+    .client-list { display: flex; flex-wrap: wrap; gap: 4px 0; }
+    .client-item { font-size: 13px; color: #555; }
+    .client-item::after { content: '\00a0/\00a0'; color: #ccc; }
+    .client-item:last-child::after { content: ''; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left" onclick="showPage('work')">Chanyoung Lee</div>
+  <div class="nav-right">
+    <div class="nav-dot"></div>
+    <a class="nav-link active" id="nav-work" onclick="showPage('work')">Work</a>
+    <a class="nav-link" id="nav-info" onclick="showPage('info')">Information</a>
+  </div>
+</nav>
+
+<div id="page-work" class="page active">
+  <div class="grid">
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/01.jpg" alt="aeae F/W Lookbook">
+      <div class="grid-overlay">
+        <div class="overlay-title">F/W Lookbook</div>
+        <div class="overlay-client">aeae</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/02.jpg" alt="하우스므세 Campaign">
+      <div class="grid-overlay">
+        <div class="overlay-title">Campaign</div>
+        <div class="overlay-client">하우스므세</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/03.jpg" alt="생긴스튜디오 S/S Campaign">
+      <div class="grid-overlay">
+        <div class="overlay-title">S/S Campaign</div>
+        <div class="overlay-client">생긴스튜디오</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/04.jpg" alt="Editorial">
+      <div class="grid-overlay">
+        <div class="overlay-title">Editorial</div>
+        <div class="overlay-client">Personal</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/05.jpg" alt="Portrait Series">
+      <div class="grid-overlay">
+        <div class="overlay-title">Portrait Series</div>
+        <div class="overlay-client">Personal</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/06.jpg" alt="aeae S/S Lookbook">
+      <div class="grid-overlay">
+        <div class="overlay-title">S/S Lookbook</div>
+        <div class="overlay-client">aeae</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/07.jpg" alt="하우스므세 Lookbook">
+      <div class="grid-overlay">
+        <div class="overlay-title">Lookbook</div>
+        <div class="overlay-client">하우스므세</div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <img class="grid-img" src="images/08.jpg" alt="Still Life">
+      <div class="grid-overlay">
+        <div class="overlay-title">Still Life</div>
+        <div class="overlay-client">Personal</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="page-info" class="page">
+  <div class="info-wrap">
+    <p class="info-intro">
+      Chanyoung Lee is a Seoul-based photographer working across fashion, editorial, and portraiture. His work centres on atmosphere and quiet tension — images that feel both composed and alive.
+    </p>
+    <div class="info-section">
+      <div class="info-label">Clients</div>
+      <div class="client-list">
+        <span class="client-item">aeae</span>
+        <span class="client-item">하우스므세</span>
+        <span class="client-item">생긴스튜디오</span>
+      </div>
+    </div>
+    <div class="info-section">
+      <div class="info-label">Contact</div>
+      <div class="info-body">
+        <a class="info-link" href="mailto:applecylee@gmail.com">applecylee@gmail.com</a><br><br>
+        <a class="info-link" href="https://instagram.com/_chanyounglee" target="_blank">@_chanyounglee</a>
+      </div>
+    </div>
+    <div class="info-section">
+      <div class="info-label">Based in</div>
+      <div class="info-body">Seoul, Korea</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+}
+</script>
+
+</body>
+</html>
