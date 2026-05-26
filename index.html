@@ -9,14 +9,15 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { background: #fff; color: #111; font-family: 'Montserrat', sans-serif; }
 
+    /* NAV */
     .nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 24px;
+      padding: 16px 20px;
       border-bottom: 0.5px solid #e0e0e0;
       position: sticky; top: 0; background: #fff; z-index: 100;
     }
-    .nav-left { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
-    .nav-right { display: flex; gap: 28px; align-items: center; }
+    .nav-left { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+    .nav-right { display: flex; gap: 24px; align-items: center; }
     .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: #111; }
     .nav-link {
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
@@ -28,14 +29,13 @@
     .page { display: none; }
     .page.active { display: block; }
 
+    /* GRID */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 3px; padding: 3px;
     }
-    @media (max-width: 768px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
 
     .grid-item {
       position: relative; overflow: hidden; cursor: pointer;
@@ -46,7 +46,6 @@
       transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
     }
     .grid-item:hover .grid-img { transform: scale(1.04); }
-
     .grid-overlay {
       position: absolute; inset: 0;
       background: rgba(0,0,0,0);
@@ -55,40 +54,142 @@
       transition: background 0.35s ease;
     }
     .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.42); }
-
     .overlay-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 22px;
-      color: #fff;
-      letter-spacing: 0.02em;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(8px);
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 18px; color: #fff; letter-spacing: 0.02em; text-align: center;
+      opacity: 0; transform: translateY(8px);
       transition: opacity 0.3s ease 0.05s, transform 0.35s ease 0.05s;
-      padding: 0 16px;
+      padding: 0 12px;
     }
     .overlay-client {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      margin-top: 7px;
-      opacity: 0;
-      transform: translateY(8px);
+      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85); margin-top: 6px;
+      opacity: 0; transform: translateY(8px);
       transition: opacity 0.3s ease 0.1s, transform 0.35s ease 0.1s;
     }
     .grid-item:hover .overlay-title,
-    .grid-item:hover .overlay-client {
-      opacity: 1; transform: translateY(0);
-    }
+    .grid-item:hover .overlay-client { opacity: 1; transform: translateY(0); }
 
-    /* Info page */
-    .info-wrap { max-width: 520px; margin: 0 auto; padding: 64px 24px 80px; }
-    .info-intro { font-size: 14px; line-height: 1.9; color: #111; margin-bottom: 52px; }
-    .info-section { margin-bottom: 36px; }
-    .info-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; margin-bottom: 12px; }
+    /* LIGHTBOX */
+    .lb {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: #fff; flex-direction: column;
+    }
+    .lb.open { display: flex; }
+
+    /* top bar */
+    .lb-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; flex-shrink: 0;
+    }
+    .lb-title-wrap { display: flex; align-items: baseline; gap: 10px; }
+    .lb-project-title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 14px; letter-spacing: 0.02em;
+    }
+    .lb-slide-num { font-size: 11px; color: #999; letter-spacing: 0.06em; }
+    .lb-close-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 16px; color: #111; padding: 4px 8px; line-height: 1;
+      transition: opacity 0.2s;
+    }
+    .lb-close-btn:hover { opacity: 0.4; }
+
+    /* stage */
+    .lb-stage {
+      flex: 1; display: flex; align-items: center;
+      position: relative; overflow: hidden; min-height: 0;
+    }
+    .lb-img-wrap {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      height: 100%; padding: 0 44px;
+    }
+    .lb-img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain; display: block;
+      opacity: 0; transition: opacity 0.2s ease;
+    }
+    .lb-img.loaded { opacity: 1; }
+
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      padding: 16px; display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+      color: #bbb; transition: color 0.2s;
+      z-index: 2;
+    }
+    .lb-arrow:hover { color: #555; }
+    .lb-arrow-left { left: 0; }
+    .lb-arrow-right { right: 0; }
+    .lb-arrow-dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; display: block; }
+    .lb-arrow-chevron { font-size: 11px; line-height: 1; }
+
+    /* bottom bar */
+    .lb-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px; flex-shrink: 0;
+      border-top: 0.5px solid #ececec;
+      gap: 12px;
+    }
+    .lb-bottom-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .lb-thumb-btn {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer; color: #111;
+      padding: 0; transition: opacity 0.2s; white-space: nowrap;
+    }
+    .lb-thumb-btn:hover { opacity: 0.4; }
+    .lb-client-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; white-space: nowrap; }
+    .lb-bottom-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .lb-bottom-num { font-size: 10px; color: #999; letter-spacing: 0.06em; white-space: nowrap; }
+    .lb-dark-btn {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer; color: #111;
+      padding: 0; transition: opacity 0.2s; white-space: nowrap;
+    }
+    .lb-dark-btn:hover { opacity: 0.4; }
+
+    /* dark mode */
+    .lb.dark { background: #111; }
+    .lb.dark .lb-project-title { color: #ddd; }
+    .lb.dark .lb-slide-num { color: #666; }
+    .lb.dark .lb-close-btn { color: #ddd; }
+    .lb.dark .lb-arrow { color: #444; }
+    .lb.dark .lb-arrow:hover { color: #aaa; }
+    .lb.dark .lb-bottom { border-top-color: #222; }
+    .lb.dark .lb-thumb-btn { color: #ddd; }
+    .lb.dark .lb-client-tag { color: #555; }
+    .lb.dark .lb-bottom-num { color: #555; }
+    .lb.dark .lb-dark-btn { color: #ddd; }
+    .lb.dark .lb-thumbs { background: #111; }
+    .lb.dark .lb-thumb-item.active { outline-color: #fff; }
+
+    /* thumbs overlay */
+    .lb-thumbs {
+      display: none; position: absolute; inset: 0;
+      background: #fff; z-index: 10; padding: 16px; overflow-y: auto;
+    }
+    .lb-thumbs.open { display: block; }
+    .lb-thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 3px;
+    }
+    .lb-thumb-item {
+      aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0;
+    }
+    .lb-thumb-item img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; transition: opacity 0.2s; }
+    .lb-thumb-item:hover img, .lb-thumb-item.active img { opacity: 1; }
+    .lb-thumb-item.active { outline: 1.5px solid #111; }
+
+    /* touch swipe */
+    .lb-stage { touch-action: pan-y; }
+
+    /* INFO */
+    .info-wrap { max-width: 500px; margin: 0 auto; padding: 52px 20px 80px; }
+    .info-intro { font-size: 13px; line-height: 1.9; color: #111; margin-bottom: 48px; }
+    .info-section { margin-bottom: 32px; }
+    .info-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; margin-bottom: 10px; }
     .info-body { font-size: 13px; line-height: 1.85; color: #333; }
     .info-link { color: #111; text-decoration: none; border-bottom: 0.5px solid #ccc; transition: border-color 0.2s; }
     .info-link:hover { border-bottom-color: #111; }
@@ -110,73 +211,7 @@
 </nav>
 
 <div id="page-work" class="page active">
-  <div class="grid">
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/01.jpg" alt="aeae F/W Lookbook">
-      <div class="grid-overlay">
-        <div class="overlay-title">F/W Lookbook</div>
-        <div class="overlay-client">aeae</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/02.jpg" alt="하우스므세 Campaign">
-      <div class="grid-overlay">
-        <div class="overlay-title">Campaign</div>
-        <div class="overlay-client">하우스므세</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/03.jpg" alt="생긴스튜디오 S/S Campaign">
-      <div class="grid-overlay">
-        <div class="overlay-title">S/S Campaign</div>
-        <div class="overlay-client">생긴스튜디오</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/04.jpg" alt="Editorial">
-      <div class="grid-overlay">
-        <div class="overlay-title">Editorial</div>
-        <div class="overlay-client">Personal</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/05.jpg" alt="Portrait Series">
-      <div class="grid-overlay">
-        <div class="overlay-title">Portrait Series</div>
-        <div class="overlay-client">Personal</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/06.jpg" alt="aeae S/S Lookbook">
-      <div class="grid-overlay">
-        <div class="overlay-title">S/S Lookbook</div>
-        <div class="overlay-client">aeae</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/07.jpg" alt="하우스므세 Lookbook">
-      <div class="grid-overlay">
-        <div class="overlay-title">Lookbook</div>
-        <div class="overlay-client">하우스므세</div>
-      </div>
-    </div>
-
-    <div class="grid-item">
-      <img class="grid-img" src="images/08.jpg" alt="Still Life">
-      <div class="grid-overlay">
-        <div class="overlay-title">Still Life</div>
-        <div class="overlay-client">Personal</div>
-      </div>
-    </div>
-
-  </div>
+  <div class="grid" id="grid"></div>
 </div>
 
 <div id="page-info" class="page">
@@ -206,7 +241,200 @@
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <div class="lb-top">
+    <div class="lb-title-wrap">
+      <span class="lb-project-title" id="lb-title"></span>
+      <span class="lb-slide-num" id="lb-num"></span>
+    </div>
+    <button class="lb-close-btn" onclick="closeLb()">&#10005;</button>
+  </div>
+
+  <div class="lb-stage" id="lb-stage">
+    <button class="lb-arrow lb-arrow-left" onclick="moveSlide(-1)">
+      <span class="lb-arrow-dot"></span>
+      <span class="lb-arrow-chevron">‹</span>
+    </button>
+    <div class="lb-img-wrap">
+      <img class="lb-img" id="lb-img" src="" alt="">
+    </div>
+    <button class="lb-arrow lb-arrow-right" onclick="moveSlide(1)">
+      <span class="lb-arrow-dot"></span>
+      <span class="lb-arrow-chevron">›</span>
+    </button>
+    <div class="lb-thumbs" id="lb-thumbs">
+      <div class="lb-thumbs-grid" id="lb-thumbs-grid"></div>
+    </div>
+  </div>
+
+  <div class="lb-bottom">
+    <div class="lb-bottom-left">
+      <button class="lb-thumb-btn" id="thumb-toggle" onclick="toggleThumbs()">Thumbnails</button>
+      <span class="lb-client-tag" id="lb-client"></span>
+    </div>
+    <div class="lb-bottom-right">
+      <span class="lb-bottom-num" id="lb-bottom-num"></span>
+      <button class="lb-dark-btn" id="dark-btn" onclick="toggleDark()">Dark</button>
+    </div>
+  </div>
+</div>
+
 <script>
+// =============================================
+// 프로젝트 데이터
+// =============================================
+const projects = [
+  {
+    title: "F/W Lookbook",
+    client: "aeae",
+    year: "2026",
+    cover: "images/01-aeae-fw/01.jpg",
+    images: [
+      "images/01-aeae-fw/01.jpg",
+      "images/01-aeae-fw/02.jpg",
+      "images/01-aeae-fw/03.jpg"
+    ]
+  },
+  {
+    title: "Campaign",
+    client: "하우스므세",
+    year: "2026",
+    cover: "images/02-housemuse/01.jpg",
+    images: [
+      "images/02-housemuse/01.jpg",
+      "images/02-housemuse/02.jpg",
+      "images/02-housemuse/03.jpg"
+    ]
+  },
+  {
+    title: "S/S Campaign",
+    client: "생긴스튜디오",
+    year: "2026",
+    cover: "images/03-gikin/01.jpg",
+    images: [
+      "images/03-gikin/01.jpg",
+      "images/03-gikin/02.jpg",
+      "images/03-gikin/03.jpg"
+    ]
+  },
+  {
+    title: "Editorial",
+    client: "Personal",
+    year: "2025",
+    cover: "images/04-editorial/01.jpg",
+    images: [
+      "images/04-editorial/01.jpg",
+      "images/04-editorial/02.jpg"
+    ]
+  }
+];
+
+// 그리드 렌더링
+const grid = document.getElementById('grid');
+projects.forEach((proj, i) => {
+  const item = document.createElement('div');
+  item.className = 'grid-item';
+  item.innerHTML = `
+    <img class="grid-img" src="${proj.cover}" alt="${proj.title}" loading="lazy">
+    <div class="grid-overlay">
+      <div class="overlay-title">${proj.title}</div>
+      <div class="overlay-client">${proj.client}</div>
+    </div>`;
+  item.addEventListener('click', () => openLb(i, 0));
+  grid.appendChild(item);
+});
+
+// 상태
+let curProj = 0, curSlide = 0, thumbsOpen = false, darkMode = false;
+
+function openLb(projIdx, slideIdx) {
+  curProj = projIdx; curSlide = slideIdx;
+  thumbsOpen = false;
+  document.getElementById('lb-thumbs').classList.remove('open');
+  document.getElementById('thumb-toggle').textContent = 'Thumbnails';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  updateLb();
+}
+
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLb() {
+  const proj = projects[curProj];
+  const total = proj.images.length;
+  const pad = n => String(n).padStart(2, '0');
+  document.getElementById('lb-title').textContent = proj.title;
+  document.getElementById('lb-num').textContent = pad(curSlide + 1) + ' / ' + pad(total);
+  document.getElementById('lb-client').textContent = proj.client;
+  document.getElementById('lb-bottom-num').textContent = pad(curSlide + 1) + ' / ' + pad(total);
+  const img = document.getElementById('lb-img');
+  img.classList.remove('loaded');
+  img.src = proj.images[curSlide];
+  img.onload = () => img.classList.add('loaded');
+}
+
+function moveSlide(dir) {
+  const proj = projects[curProj];
+  curSlide = (curSlide + dir + proj.images.length) % proj.images.length;
+  updateLb();
+  if (thumbsOpen) refreshThumbs();
+}
+
+function toggleThumbs() {
+  thumbsOpen = !thumbsOpen;
+  const el = document.getElementById('lb-thumbs');
+  const btn = document.getElementById('thumb-toggle');
+  if (thumbsOpen) { el.classList.add('open'); btn.textContent = 'Close'; buildThumbs(); }
+  else { el.classList.remove('open'); btn.textContent = 'Thumbnails'; }
+}
+
+function buildThumbs() {
+  const proj = projects[curProj];
+  const g = document.getElementById('lb-thumbs-grid');
+  g.innerHTML = '';
+  proj.images.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'lb-thumb-item' + (i === curSlide ? ' active' : '');
+    item.innerHTML = `<img src="${src}" alt="" loading="lazy">`;
+    item.addEventListener('click', () => { curSlide = i; updateLb(); toggleThumbs(); });
+    g.appendChild(item);
+  });
+}
+
+function refreshThumbs() {
+  document.querySelectorAll('.lb-thumb-item').forEach((el, i) => {
+    el.classList.toggle('active', i === curSlide);
+  });
+}
+
+function toggleDark() {
+  darkMode = !darkMode;
+  const lb = document.getElementById('lb');
+  lb.classList.toggle('dark', darkMode);
+  document.getElementById('dark-btn').textContent = darkMode ? 'Light' : 'Dark';
+}
+
+// 키보드
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') moveSlide(1);
+  if (e.key === 'ArrowLeft') moveSlide(-1);
+  if (e.key === 'Escape') closeLb();
+});
+
+// 터치 스와이프
+let touchStartX = 0;
+const stage = document.getElementById('lb-stage');
+stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+stage.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) moveSlide(diff > 0 ? 1 : -1);
+});
+
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -214,6 +442,5 @@ function showPage(name) {
   document.getElementById('nav-' + name).classList.add('active');
 }
 </script>
-
 </body>
 </html>
