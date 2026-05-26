@@ -8,12 +8,9 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { background: #fff; color: #111; font-family: 'Montserrat', sans-serif; }
-
-    /* NAV */
     .nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 0.5px solid #e0e0e0;
+      padding: 16px 20px; border-bottom: 0.5px solid #e0e0e0;
       position: sticky; top: 0; background: #fff; z-index: 100;
     }
     .nav-left { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
@@ -25,131 +22,45 @@
       padding-bottom: 1px; border-bottom: 0.5px solid transparent; transition: border-color 0.2s;
     }
     .nav-link:hover, .nav-link.active { border-bottom-color: #111; }
-
     .page { display: none; }
     .page.active { display: block; }
-
-    /* GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3px; padding: 3px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 3px; }
     @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-
-    .grid-item {
-      position: relative; overflow: hidden; cursor: pointer;
-      aspect-ratio: 3/4; background: #e8e8e8;
-    }
-    .grid-img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
+    .grid-item { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; background: #e8e8e8; }
+    .grid-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
     .grid-item:hover .grid-img { transform: scale(1.04); }
-    .grid-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      transition: background 0.35s ease;
-    }
+    .grid-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background 0.35s ease; }
     .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.42); }
-    .overlay-title {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
-      font-size: 18px; color: #fff; letter-spacing: 0.02em; text-align: center;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity 0.3s ease 0.05s, transform 0.35s ease 0.05s;
-      padding: 0 12px;
-    }
-    .overlay-client {
-      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(255,255,255,0.85); margin-top: 6px;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity 0.3s ease 0.1s, transform 0.35s ease 0.1s;
-    }
-    .grid-item:hover .overlay-title,
-    .grid-item:hover .overlay-client { opacity: 1; transform: translateY(0); }
-
-    /* LIGHTBOX */
-    .lb {
-      display: none; position: fixed; inset: 0; z-index: 1000;
-      background: #fff; flex-direction: column;
-    }
+    .overlay-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: #fff; letter-spacing: 0.02em; text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease 0.05s, transform 0.35s ease 0.05s; padding: 0 12px; }
+    .overlay-client { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-top: 6px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease 0.1s, transform 0.35s ease 0.1s; }
+    .grid-item:hover .overlay-title, .grid-item:hover .overlay-client { opacity: 1; transform: translateY(0); }
+    .lb { display: none; position: fixed; inset: 0; z-index: 1000; background: #fff; flex-direction: column; }
     .lb.open { display: flex; }
-
-    /* top bar */
-    .lb-top {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px; flex-shrink: 0;
-    }
+    .lb-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; flex-shrink: 0; }
     .lb-title-wrap { display: flex; align-items: baseline; gap: 10px; }
-    .lb-project-title {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
-      font-size: 14px; letter-spacing: 0.02em;
-    }
+    .lb-project-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; letter-spacing: 0.02em; }
     .lb-slide-num { font-size: 11px; color: #999; letter-spacing: 0.06em; }
-    .lb-close-btn {
-      background: none; border: none; cursor: pointer;
-      font-size: 16px; color: #111; padding: 4px 8px; line-height: 1;
-      transition: opacity 0.2s;
-    }
+    .lb-close-btn { background: none; border: none; cursor: pointer; font-size: 16px; color: #111; padding: 4px 8px; line-height: 1; transition: opacity 0.2s; }
     .lb-close-btn:hover { opacity: 0.4; }
-
-    /* stage */
-    .lb-stage {
-      flex: 1; display: flex; align-items: center;
-      position: relative; overflow: hidden; min-height: 0;
-    }
-    .lb-img-wrap {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      height: 100%; padding: 0 44px;
-    }
-    .lb-img {
-      max-width: 100%; max-height: 100%;
-      object-fit: contain; display: block;
-      opacity: 0; transition: opacity 0.2s ease;
-    }
+    .lb-stage { flex: 1; display: flex; align-items: center; position: relative; overflow: hidden; min-height: 0; touch-action: pan-y; }
+    .lb-img-wrap { flex: 1; display: flex; align-items: center; justify-content: center; height: 100%; padding: 0 44px; }
+    .lb-img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity 0.2s ease; }
     .lb-img.loaded { opacity: 1; }
-
-    .lb-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: none; border: none; cursor: pointer;
-      padding: 16px; display: flex; flex-direction: column;
-      align-items: center; gap: 3px;
-      color: #bbb; transition: color 0.2s;
-      z-index: 2;
-    }
+    .lb-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 3px; color: #bbb; transition: color 0.2s; z-index: 2; }
     .lb-arrow:hover { color: #555; }
     .lb-arrow-left { left: 0; }
     .lb-arrow-right { right: 0; }
     .lb-arrow-dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; display: block; }
     .lb-arrow-chevron { font-size: 11px; line-height: 1; }
-
-    /* bottom bar */
-    .lb-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 18px; flex-shrink: 0;
-      border-top: 0.5px solid #ececec;
-      gap: 12px;
-    }
+    .lb-bottom { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; flex-shrink: 0; border-top: 0.5px solid #ececec; gap: 12px; }
     .lb-bottom-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .lb-thumb-btn {
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-      background: none; border: none; cursor: pointer; color: #111;
-      padding: 0; transition: opacity 0.2s; white-space: nowrap;
-    }
+    .lb-thumb-btn { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: none; border: none; cursor: pointer; color: #111; padding: 0; transition: opacity 0.2s; white-space: nowrap; }
     .lb-thumb-btn:hover { opacity: 0.4; }
     .lb-client-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; white-space: nowrap; }
     .lb-bottom-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
     .lb-bottom-num { font-size: 10px; color: #999; letter-spacing: 0.06em; white-space: nowrap; }
-    .lb-dark-btn {
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-      background: none; border: none; cursor: pointer; color: #111;
-      padding: 0; transition: opacity 0.2s; white-space: nowrap;
-    }
+    .lb-dark-btn { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: none; border: none; cursor: pointer; color: #111; padding: 0; transition: opacity 0.2s; white-space: nowrap; }
     .lb-dark-btn:hover { opacity: 0.4; }
-
-    /* dark mode */
     .lb.dark { background: #111; }
     .lb.dark .lb-project-title { color: #ddd; }
     .lb.dark .lb-slide-num { color: #666; }
@@ -163,29 +74,13 @@
     .lb.dark .lb-dark-btn { color: #ddd; }
     .lb.dark .lb-thumbs { background: #111; }
     .lb.dark .lb-thumb-item.active { outline-color: #fff; }
-
-    /* thumbs overlay */
-    .lb-thumbs {
-      display: none; position: absolute; inset: 0;
-      background: #fff; z-index: 10; padding: 16px; overflow-y: auto;
-    }
+    .lb-thumbs { display: none; position: absolute; inset: 0; background: #fff; z-index: 10; padding: 16px; overflow-y: auto; }
     .lb-thumbs.open { display: block; }
-    .lb-thumbs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 3px;
-    }
-    .lb-thumb-item {
-      aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0;
-    }
+    .lb-thumbs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 3px; }
+    .lb-thumb-item { aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0; }
     .lb-thumb-item img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; transition: opacity 0.2s; }
     .lb-thumb-item:hover img, .lb-thumb-item.active img { opacity: 1; }
     .lb-thumb-item.active { outline: 1.5px solid #111; }
-
-    /* touch swipe */
-    .lb-stage { touch-action: pan-y; }
-
-    /* INFO */
     .info-wrap { max-width: 500px; margin: 0 auto; padding: 52px 20px 80px; }
     .info-intro { font-size: 13px; line-height: 1.9; color: #111; margin-bottom: 48px; }
     .info-section { margin-bottom: 32px; }
@@ -225,6 +120,7 @@
         <span class="client-item">aeae</span>
         <span class="client-item">하우스므세</span>
         <span class="client-item">생긴스튜디오</span>
+        <span class="client-item">Tumulus</span>
       </div>
     </div>
     <div class="info-section">
@@ -241,7 +137,6 @@
   </div>
 </div>
 
-<!-- LIGHTBOX -->
 <div class="lb" id="lb">
   <div class="lb-top">
     <div class="lb-title-wrap">
@@ -250,7 +145,6 @@
     </div>
     <button class="lb-close-btn" onclick="closeLb()">&#10005;</button>
   </div>
-
   <div class="lb-stage" id="lb-stage">
     <button class="lb-arrow lb-arrow-left" onclick="moveSlide(-1)">
       <span class="lb-arrow-dot"></span>
@@ -267,7 +161,6 @@
       <div class="lb-thumbs-grid" id="lb-thumbs-grid"></div>
     </div>
   </div>
-
   <div class="lb-bottom">
     <div class="lb-bottom-left">
       <button class="lb-thumb-btn" id="thumb-toggle" onclick="toggleThumbs()">Thumbnails</button>
@@ -282,55 +175,32 @@
 
 <script>
 // =============================================
-// 프로젝트 데이터
+// 프로젝트 데이터 — 여기만 수정하세요
 // =============================================
 const projects = [
   {
-    title: "F/W Lookbook",
-    client: "aeae",
-    year: "2026",
-    cover: "images/01-aeae-fw/01.jpg",
+    title: "Tumulus 2024 Campaign",
+    client: "Tumulus",
+    year: "2024",
+    cover: "images/Tumulus-2024/01.jpeg",
     images: [
-      "images/01-aeae-fw/01.jpg",
-      "images/01-aeae-fw/02.jpg",
-      "images/01-aeae-fw/03.jpg"
-    ]
-  },
-  {
-    title: "Campaign",
-    client: "하우스므세",
-    year: "2026",
-    cover: "images/02-housemuse/01.jpg",
-    images: [
-      "images/02-housemuse/01.jpg",
-      "images/02-housemuse/02.jpg",
-      "images/02-housemuse/03.jpg"
-    ]
-  },
-  {
-    title: "S/S Campaign",
-    client: "생긴스튜디오",
-    year: "2026",
-    cover: "images/03-gikin/01.jpg",
-    images: [
-      "images/03-gikin/01.jpg",
-      "images/03-gikin/02.jpg",
-      "images/03-gikin/03.jpg"
-    ]
-  },
-  {
-    title: "Editorial",
-    client: "Personal",
-    year: "2025",
-    cover: "images/04-editorial/01.jpg",
-    images: [
-      "images/04-editorial/01.jpg",
-      "images/04-editorial/02.jpg"
+      "images/Tumulus-2024/01.jpeg",
+      "images/Tumulus-2024/02.jpeg",
+      "images/Tumulus-2024/03.jpeg",
+      "images/Tumulus-2024/04.jpeg",
+      "images/Tumulus-2024/05.jpeg",
+      "images/Tumulus-2024/06.jpeg",
+      "images/Tumulus-2024/07.jpeg",
+      "images/Tumulus-2024/08.jpeg",
+      "images/Tumulus-2024/09.jpeg",
+      "images/Tumulus-2024/10.jpeg",
+      "images/Tumulus-2024/11.jpeg",
+      "images/Tumulus-2024/12.jpeg"
     ]
   }
+  // 다음 프로젝트는 여기에 추가
 ];
 
-// 그리드 렌더링
 const grid = document.getElementById('grid');
 projects.forEach((proj, i) => {
   const item = document.createElement('div');
@@ -345,7 +215,6 @@ projects.forEach((proj, i) => {
   grid.appendChild(item);
 });
 
-// 상태
 let curProj = 0, curSlide = 0, thumbsOpen = false, darkMode = false;
 
 function openLb(projIdx, slideIdx) {
@@ -413,12 +282,10 @@ function refreshThumbs() {
 
 function toggleDark() {
   darkMode = !darkMode;
-  const lb = document.getElementById('lb');
-  lb.classList.toggle('dark', darkMode);
+  document.getElementById('lb').classList.toggle('dark', darkMode);
   document.getElementById('dark-btn').textContent = darkMode ? 'Light' : 'Dark';
 }
 
-// 키보드
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lb').classList.contains('open')) return;
   if (e.key === 'ArrowRight') moveSlide(1);
@@ -426,7 +293,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLb();
 });
 
-// 터치 스와이프
 let touchStartX = 0;
 const stage = document.getElementById('lb-stage');
 stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
