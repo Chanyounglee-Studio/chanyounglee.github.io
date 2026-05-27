@@ -8,19 +8,11 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { background: #fff; color: #111; font-family: 'Montserrat', sans-serif; }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; border-bottom: 0.5px solid #e0e0e0;
-      position: sticky; top: 0; background: #fff; z-index: 100;
-    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 0.5px solid #e0e0e0; position: sticky; top: 0; background: #fff; z-index: 100; }
     .nav-left { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
     .nav-right { display: flex; gap: 24px; align-items: center; }
     .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: #111; }
-    .nav-link {
-      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      cursor: pointer; color: #111; text-decoration: none;
-      padding-bottom: 1px; border-bottom: 0.5px solid transparent; transition: border-color 0.2s;
-    }
+    .nav-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: #111; text-decoration: none; padding-bottom: 1px; border-bottom: 0.5px solid transparent; transition: border-color 0.2s; }
     .nav-link:hover, .nav-link.active { border-bottom-color: #111; }
     .page { display: none; }
     .page.active { display: block; }
@@ -174,9 +166,6 @@
 </div>
 
 <script>
-// =============================================
-// 프로젝트 데이터 — 여기만 수정하세요
-// =============================================
 const projects = [
   {
     title: "Tumulus 2024 Campaign",
@@ -197,8 +186,30 @@ const projects = [
       "images/Tumulus-2024/11.jpeg",
       "images/Tumulus-2024/12.jpeg"
     ]
+  },
+  {
+    title: "Extinction and Non-Extinction",
+    client: "Jewellery Campaign",
+    year: "2024",
+    cover: "Extinction and non-extinction/01.jpeg",
+    images: [
+      "Extinction and non-extinction/01.jpeg",
+      "Extinction and non-extinction/02.jpeg",
+      "Extinction and non-extinction/03.jpeg",
+      "Extinction and non-extinction/04.jpeg",
+      "Extinction and non-extinction/05.jpeg",
+      "Extinction and non-extinction/06.jpeg",
+      "Extinction and non-extinction/07.jpeg",
+      "Extinction and non-extinction/08.jpeg",
+      "Extinction and non-extinction/09.jpeg",
+      "Extinction and non-extinction/10.jpeg",
+      "Extinction and non-extinction/11.jpeg",
+      "Extinction and non-extinction/12.jpeg",
+      "Extinction and non-extinction/13.jpeg",
+      "Extinction and non-extinction/14.jpeg",
+      "Extinction and non-extinction/15.jpeg"
+    ]
   }
-  // 다음 프로젝트는 여기에 추가
 ];
 
 const grid = document.getElementById('grid');
